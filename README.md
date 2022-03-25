@@ -1,6 +1,6 @@
 ## Contributing
 
-# Install dependencies:
+Install dependencies:
 
 ```bash
 source .venv/bin/activate
