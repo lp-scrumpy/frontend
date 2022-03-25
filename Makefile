@@ -4,16 +4,16 @@ export
 dev.install:
 	@poetry install
 lint:
-	@mypy backend
-	@flake8 backend
+	@mypy frontend
+	@flake8 frontend
 run:
-	@python -m backend
+	@python -m frontend
 
 db.run:
 	@docker-compose up -d db
 
 db.create:
-	@python -m backend.models
+	@python -m frontend.models
 
 db.stop:
 	@docker-compose stop db
