@@ -1,0 +1,10 @@
+<html>
+    <body>
+        <h1> Ваше имя: </h1>
+        <ul>
+            {%for user in users%}
+                <li>Hello, {{ user.username }}!</li>
+            {%endfor%}
+        </ul>
+    </body>
+</html>
