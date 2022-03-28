@@ -1,6 +1,8 @@
 import logging
 
-from frontend.app import app
+from flask import Flask
+
+from frontend.app import uapp as user_app
 
 logger = logging.getLogger(__name__)
 
@@ -8,7 +10,9 @@ logger = logging.getLogger(__name__)
 def main():
     logging.basicConfig(level=logging.DEBUG)
     logger.info("application started")
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    app = Flask(__name__)
+    app.register_blueprint(user_app)
+    app.run()
 
 
 if __name__ == '__main__':
