@@ -1,12 +1,7 @@
 from flask import Blueprint, render_template
 from jinja2 import Environment, PackageLoader
-
-users = [
-    {"uid": 1, "username": "Миша"},
-    {"uid": 2, "username": "Маша"},
-    {"uid": 3, "username": "Cаша"},
-    {"uid": 4, "username": "Оля"},
-]
+from frontend.clients.user_client import UserClient
+from frontend.config import ENDPOINT
 
 
 env = Environment(loader=PackageLoader('frontend', 'templates'))
@@ -21,5 +16,7 @@ def index():
 
 @uapp.route('/users')
 def user_registration():
+    users_client = UserClient(ENDPOINT)
+    all_users = users_client.get_all()
     template = env.get_template('name.html')
-    return template.render(users=users)
+    return template.render(users=all_users)
