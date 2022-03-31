@@ -1,14 +1,10 @@
 from flask import Blueprint, redirect, render_template
-from jinja2 import Environment, PackageLoader
-
-from frontend.clients.user_client import UserClient
+from frontend.clients.plan_client import PlanningClient
 from frontend.config import ENDPOINT
 
 view = Blueprint('plan', __name__)
 
-env = Environment(loader=PackageLoader('frontend', 'templates'))
-
-users_client = UserClient(ENDPOINT)
+users_client = PlanningClient(ENDPOINT)
 
 
 @view.route('/')

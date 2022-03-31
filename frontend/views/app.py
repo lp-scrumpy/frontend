@@ -1,10 +1,8 @@
 from flask import Blueprint, render_template
-from jinja2 import Environment, PackageLoader
 
 from frontend.clients.user_client import UserClient
 from frontend.config import ENDPOINT
 
-env = Environment(loader=PackageLoader('frontend', 'templates'))
 
 uapp = Blueprint('user', __name__)
 
