@@ -1,5 +1,7 @@
 import httpx
 
+from frontend.schemas import User
+
 
 class UserClient:
     def __init__(self, url: str):
@@ -7,4 +9,5 @@ class UserClient:
 
     def get_all(self):
         res = httpx.get(f'{self.url}/')
-        return res.json()
+        users = res.json()
+        return [User(**user)for user in users]
