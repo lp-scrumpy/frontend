@@ -1,5 +1,5 @@
 import logging
-from flask import Blueprint, redirect, render_template
+from flask import Blueprint, redirect, render_template, url_for
 from frontend.clients.plan_client import PlanningClient
 
 from datetime import datetime
@@ -18,7 +18,7 @@ plan_client = PlanningClient(ENDPOINT)
 def index():
     plan = plan_client.add(name='', date=datetime.now())
     logger.info(plan)
-    return redirect('<plan_id>')
+    return redirect(url_for('plannings.plan', plan_id=plan.uid))
 
 
 @uapp.route('/users')

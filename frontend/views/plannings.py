@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from frontend.clients.plan_client import PlanningClient
 from frontend.config import ENDPOINT
 
-view = Blueprint('plan', __name__)
+view = Blueprint('plannings', __name__)
 
 plan_client = PlanningClient(ENDPOINT)
 
