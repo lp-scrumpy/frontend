@@ -1,8 +1,10 @@
 <html>
-    <head>
-        <title>Scrum poker</title>
-    </head>
     <body>
-        <h1>Plannings here </h1>
+        <h1> Задачи: </h1>
+        <ul>
+            {%for task in tasks%}
+                <li>{{task.name}}</li>
+            {%endfor%}
+        </ul>
     </body>
 </html>

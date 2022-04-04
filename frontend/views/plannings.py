@@ -1,18 +1,19 @@
-from flask import Blueprint, redirect, render_template
+from flask import Blueprint, render_template
 from frontend.clients.plan_client import PlanningClient
 from frontend.config import ENDPOINT
 
-view = Blueprint('plan', __name__)
+view = Blueprint('plannings', __name__)
 
-users_client = PlanningClient(ENDPOINT)
-
-
-@view.route('/')
-def plan():
-    return redirect('/new_plan')
+plan_client = PlanningClient(ENDPOINT)
 
 
-@view.route('/new_plan')
-def new_plan():
-    all_plans = users_client.get_all()
-    return render_template('plannings.html', plans=all_plans)
+# @view.route('/plannings')
+# def plan():
+#     all_plans = users_client.get_all()
+#     return render_template('plannings.html', plans=all_plans)
+
+
+@view.route('<plan_id>')
+def plan(plan_id):
+    tasks = plan_client.get_tasks(plan_id)
+    return render_template('plannings.html', tasks=tasks)
