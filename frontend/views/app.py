@@ -6,7 +6,7 @@ from datetime import datetime
 from frontend.clients.user_client import UserClient
 from frontend.config import ENDPOINT
 
-uapp = Blueprint('user', __name__)
+view = Blueprint('app', __name__)
 
 logger = logging.getLogger(__name__)
 
@@ -14,14 +14,14 @@ users_client = UserClient(ENDPOINT)
 plan_client = PlanningClient(ENDPOINT)
 
 
-@uapp.route('/')
+@view.route('/')
 def index():
     plan = plan_client.add(name='', date=datetime.now())
     logger.info(plan)
-    return redirect(url_for('plannings.plan', plan_id=plan.uid))
+    return redirect(url_for('plannings.plan', planning_id=plan.uid))
 
 
-@uapp.route('/users')
+@view.route('/users')
 def user_registration():
     all_users = users_client.get_all()
     return render_template('name.html', users=all_users)

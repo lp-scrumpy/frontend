@@ -1,8 +1,8 @@
 import logging
 
 from flask import Flask
-from frontend.views.app import uapp as user_app
 from frontend.views import plannings
+from frontend.views.app import view
 logger = logging.getLogger(__name__)
 
 
@@ -10,7 +10,7 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
     logger.info("application started")
     app = Flask(__name__)
-    app.register_blueprint(user_app)
+    app.register_blueprint(view, url_prefix='/')
     app.register_blueprint(plannings.view, url_prefix='/plannings')
     app.run()
 
