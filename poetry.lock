@@ -337,7 +337,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10.2"
-content-hash = "07e54b48196e9564a872ff94f004b6dfac70f08065a9b7b97936200e4e25c5f4"
+content-hash = "eb1c47f61c95d4368ec41369b2d3f6509dede9fd924f0d1f51c186a50b61450e"
 
 [metadata.files]
 anyio = [
