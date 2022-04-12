@@ -1,6 +1,7 @@
 import logging
 
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import (Blueprint, redirect, render_template, request, session,
+                   url_for)
 
 from frontend.clients.plan_client import PlanningClient
 from frontend.clients.task_client import TaskClient
@@ -18,8 +19,17 @@ task_client = TaskClient(ENDPOINT)
 
 @view.route('/<planning_id>')
 def plan(planning_id):
+    username, userid = session.get('username'), session.get('userid')
     tasks = task_client.get_all_tasks(planning_id)
-    return render_template('plannings.html', tasks=tasks, users=[], planning_id=planning_id)
+    users = user_client.get_all_users(planning_id)
+    return render_template(
+        'plannings.html',
+        username=username,
+        userid=userid,
+        tasks=tasks,
+        users=users,
+        planning_id=planning_id,
+    )
 
 
 @view.post('/<planning_id>/tasks/')
@@ -32,4 +42,8 @@ def create_task(planning_id):
 @view.post('/<planning_id>/users/')
 def create_user(planning_id):
     logger.info('user created %s', planning_id)
+    user_client.add_user(name=request.form['user'], planning_id=planning_id)
+
+    session['userid'] = 1
+    session['username'] = request.form['user']
     return redirect(url_for('plannings.plan', planning_id=planning_id))
