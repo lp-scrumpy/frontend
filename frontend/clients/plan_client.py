@@ -9,11 +9,11 @@ class PlanningClient:
     def __init__(self, url: str):
         self.url = f'{url}/plannings/'
 
-    def get_all(self) -> list[Plan]:
-        res = httpx.get(self.url)
+    def get_by_id(self, planning_id: int) -> Plan:
+        res = httpx.get(f'{self.url}{planning_id}')
         res.raise_for_status()
-        plans = res.json()
-        return [Plan(**plan)for plan in plans]
+        plan = Plan(res.json())
+        return plan
 
     def add(self, name: str, date: datetime) -> Plan:
         plan = Plan(uid=-1, name=name, date=date)
