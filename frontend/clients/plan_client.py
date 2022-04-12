@@ -2,7 +2,7 @@ import orjson
 from datetime import datetime
 import httpx
 
-from frontend.schemas import Plan, User
+from frontend.schemas import Plan
 
 
 class PlanningClient:
@@ -27,17 +27,3 @@ class PlanningClient:
         res.raise_for_status()
         plan = res.json()
         return Plan(**plan)
-
-    def get_all_users(self) -> list[User]:
-        res = httpx.get(f'{self.url}')
-        res.raise_for_status()
-        users = res.json()
-        return [User(**user)for user in users]
-
-    def add_user(self, name: str) -> User:
-        user = User(uid=-1, name=name)
-        payload = orjson.dumps(user.dict())
-        res = httpx.post(f'{self.url}new-user', content=payload)
-        res.raise_for_status()
-        user = res.json()
-        return User(**user)
