@@ -58,10 +58,12 @@
 
             <div class="well well-lg">
                 {%for user in users%}
-                <li>{{user.username}}</li>
+                <li>{{user.name}}</li>
                 {%endfor%}
             </div>
         </div>
+
+        {% if not userid or not username %}
         <div class="container">
             <form
                 class="form-horizontal"
@@ -87,6 +89,8 @@
                     </div>
                 </div>
             </form>
+            {% endif %}
+
         </div>
     </body>
 </html>
