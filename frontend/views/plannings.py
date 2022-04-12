@@ -1,5 +1,8 @@
 import logging
-from flask import Blueprint, render_template, redirect, session, url_for, request
+
+from flask import (Blueprint, redirect, render_template, request, session,
+                   url_for)
+
 from frontend.clients.plan_client import PlanningClient
 from frontend.clients.task_client import TaskClient
 from frontend.clients.user_client import UserClient
