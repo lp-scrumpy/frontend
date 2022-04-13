@@ -49,13 +49,9 @@ def create_user(planning_id):
     return redirect(url_for('plannings.plan', planning_id=planning_id))
 
 
-@view.get('/<planning_id>/tasks/')
+@view.get('/<planning_id>/tasks/<task_id>')
 def get_task_by_id(task_id, planning_id):
     task = task_client.get_by_id(task_id, planning_id)
     logger.info(task)
-    return redirect(url_for('plannings.get_task', task_id=task.uid))
+    return render_template('estimate.html', task_id=task.uid, planning_id=planning_id)
 
-
-@view.get('/<planning_id>/tasks/<task_id>/')
-def get_task(task_id, planning_id):
-    return render_template('estimate.html', task_id, planning_id)

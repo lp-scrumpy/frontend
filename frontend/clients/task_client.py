@@ -36,5 +36,6 @@ class TaskClient:
         url = f'{self.url}/{planning_id}/tasks/{task_id}'
         res = httpx.get(url)
         res.raise_for_status()
-        task = Task(res.json())
-        return task
+
+        task = res.json()
+        return Task(**task)

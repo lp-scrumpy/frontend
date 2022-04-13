@@ -38,7 +38,7 @@
 
             <div class="well well-lg">
                 {% for task in tasks %}
-                <a href="{{url_for('plannings.get_task_by_id', planning_id=planning_id, task_id=task_id)}}">
+                <a href="{{url_for('plannings.get_task_by_id', planning_id=planning_id, task_id=task.uid)}}">
                 <ul style="list-style-type:none;">
                 <li>
                     {{ task.name }}

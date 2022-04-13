@@ -16,3 +16,9 @@ class Plan(BaseModel):
 class Task(BaseModel):
     uid: int
     name: str
+
+
+class Estimate(BaseModel):
+    uid: int
+    storypoint: int
+    user_id: int
