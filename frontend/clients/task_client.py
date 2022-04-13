@@ -21,8 +21,20 @@ class TaskClient:
         task = Task(uid=-1, name=name)
         payload = orjson.dumps(task.dict())
 
-        res = httpx.post(url, content=payload, headers=self.headers)
+        res = httpx.post(
+            url,
+            content=payload,
+            headers=self.headers,
+            timeout=20,
+        )
         res.raise_for_status()
 
         task = res.json()
         return Task(**task)
+
+    def get_by_id(self, task_id: int, planning_id: int) -> Task:
+        url = f'{self.url}/{planning_id}/tasks/{task_id}'
+        res = httpx.get(url)
+        res.raise_for_status()
+        task = Task(res.json())
+        return task

@@ -10,7 +10,23 @@
             >
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <style>
+            li {
+                background: #ddd;
+                border: 1px solid #ddd;
+                padding: 5px;
+                margin: 5px;
+                width: 200px;
+            list-style-type: none;
+            }
+
+            .menu li {
+            cursor: pointer;
+            }
+
+        </style>
     </head>
+
     <body>
         <div class="jumbotron">
             <h1>ScrumPY</h1>
@@ -22,7 +38,13 @@
 
             <div class="well well-lg">
                 {% for task in tasks %}
-                <li>{{ task.name }}</li>
+                <a href="{{url_for('plannings.get_task_by_id', planning_id=planning_id, task_id=task_id)}}">
+                <ul style="list-style-type:none;">
+                <li>
+                    {{ task.name }}
+                </li>
+                </ul>
+                </a>
                 {% endfor %}
             </div>
         </div>
@@ -60,6 +82,9 @@
                 {% for user in users %}
                 <li>{{ user.name }}</li>
                 {% endfor %}
+            </div>
+            <div class="container mt-3">
+                <button type="button" class="btn btn-outline-dark">{{ username }}</button>
             </div>
         </div>
 
