@@ -20,5 +20,5 @@ class Task(BaseModel):
 
 class Estimate(BaseModel):
     uid: int
-    storypoint: int
+    estimate: str
     user_id: int
