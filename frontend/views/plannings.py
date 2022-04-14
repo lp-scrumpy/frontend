@@ -7,8 +7,10 @@ from frontend.clients.plan_client import PlanningClient
 from frontend.clients.task_client import TaskClient
 from frontend.clients.user_client import UserClient
 from frontend.config import ENDPOINT
+from frontend.views.tasks import task_view
 
 view = Blueprint('plannings', __name__)
+view.register_blueprint(task_view, url_prefix='/<int:planning_id>/tasks')
 
 logger = logging.getLogger(__name__)
 
@@ -47,11 +49,3 @@ def create_user(planning_id):
     session['userid'] = 1
     session['username'] = request.form['user']
     return redirect(url_for('plannings.plan', planning_id=planning_id))
-
-
-@view.get('/<planning_id>/tasks/<task_id>')
-def get_task_by_id(task_id, planning_id):
-    task = task_client.get_by_id(task_id, planning_id)
-    logger.info(task)
-    return render_template('estimate.html', task_id=task.uid, planning_id=planning_id)
-
