@@ -47,3 +47,11 @@ def create_user(planning_id):
     session['userid'] = 1
     session['username'] = request.form['user']
     return redirect(url_for('plannings.plan', planning_id=planning_id))
+
+
+@view.get('/<planning_id>/tasks/<task_id>')
+def get_task_by_id(task_id, planning_id):
+    task = task_client.get_by_id(task_id, planning_id)
+    logger.info(task)
+    return render_template('estimate.html', task_id=task.uid, planning_id=planning_id)
+
