@@ -1,7 +1,7 @@
 import orjson
 import httpx
 
-from frontend.schemas import Plan, Task
+from frontend.schemas import Plan, Task, Estimate
 
 
 class TaskClient:
@@ -39,3 +39,18 @@ class TaskClient:
 
         task = res.json()
         return Task(**task)
+
+    def set_estimates(self, storypoint: int, planning_id: int, task_id: int, user_id: int) -> Estimate:
+        url = f'{self.url}/{planning_id}/tasks/{task_id}/estimates/'
+        estimate = Estimate(uid=-1, storypoint=storypoint, user_id=user_id)
+        payload = orjson.dumps(estimate.dict())
+        res = httpx.post(
+            url,
+            content=payload,
+            headers=self.headers,
+            timeout=20,
+        )
+        res.raise_for_status()
+
+        estimate = res.json()
+        return Estimate(**estimate)

@@ -1,10 +1,68 @@
-<html>
-    <body>
-        <h1> Ваше имя: </h1>
-        <ul>
-            {%for user in users%}
-                <li>Hello, {{ user.username }}!</li>
-            {%endfor%}
-        </ul>
-    </body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title> Final Score </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      >
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <style>
+        div {
+            width: 33%; /* Ширина */
+            float: left; /* Выстраиваем элементы по горизонтали */
+            margin: 0 0 0 3.0%; /* Отступ слева */
+            background: #d1c9c9; /* Цвет фона */
+            border-radius: 50px; /* Радиус скругления */
+            padding: 3%; /* Поля */
+            height:120px;
+            line-height:100px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+	</style>
+</head>
+<body>
+<div2 class="container mt-3" style="float: right;">
+    <button type="card" class="btn btn-outline-dark">username </button>
+</div2>
+</body>
+
+<body>
+    <h1>Final Result</h1>
+
+    <div1 class="card" style="width: 130rem; margin: 0 0 0 10.0%; ">
+        <div class="card text-center">
+              Название таски
+            </div>
+    </div1>
+
+<div class="card" style="width: 13rem;">
+    <h5 class="card-title" style="width: 8rem; margin: 0 0 0 3.0%; float: left;">YOURE SCORE</h5>
+    <p class="card-body" style="margin: 0 0 0 3.0%; float: left;">YOURE SCORE</p>
+</div>
+
+<div class="card" style="width: 13rem;">
+    <h5 class="card-title" style="width: 8rem; margin: 0 0 0 3.0%; float: left;">TOTAL SCORE</h5>
+    <p class="card-body" style="margin: 0 0 0 3.0%; float: left;">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+</p>
+    <button type="submit" class="btn btn-success" style="float: right;">SCORE</button>
+  </div>
+
+  <div1 class="container">
+    <h2>UserStory</h2>
+
+    <div class="well well-lg" style="width: 20rem;">
+        {% for user in users %}
+        <li>{{ user.name }}</li>
+        {% endfor %}
+    </div>
+</div1>
+
+</body>
 </html>
