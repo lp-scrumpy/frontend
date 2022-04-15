@@ -19,18 +19,25 @@
 	</style> -->
 </head>
 <body>
-    <div class="jumbotron">
+    <div class="jumbotron" style="text-indent: 15px;">
         <h1>Оценка задачи</h1>
     </div>
-    <div class="container mt-3">
-        <button type="button" class="btn btn-outline-dark"> {{ username }}  </button>
+    <div class="col-sm-offset-2 col-sm-10" style="position: relative; left: 1%;">
+        <button type="button" class="btn btn-outline-dark"> {{ username }} </button>
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 justify-content-md-center">
         {% for estimate in estimates %}
             <a href="{{ url_for('plannings.tasks.set_estimate', planning_id=planning_id, task_id=task_id, estimate=estimate) }}">
-                <div class="container-fluid">
-                    <div class="card" style="height: 200; width: 200; background: gray" >
-                        <div class="card-img-overlay d-flex align-items-center justify-content-center" >
+                <div class="container-fluid" style="margin-bottom: 16px; margin-top: 25px;">
+                    <div class="card"
+                        style="
+                        height: 200;
+                        width: 200;
+                        background: gray;
+                        box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+                        0 10px 10px rgba(0,0,0,0.22) "  >
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center"
+                    >
                             <h2 class="card-text text-white" > {{ estimate }} </h2>
                         </div>
                     </div>

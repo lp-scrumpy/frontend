@@ -17,69 +17,76 @@
             float: left; /* Выстраиваем элементы по горизонтали */
             margin: 0 0 0 3.0%; /* Отступ слева */
             background: #d1c9c9; /* Цвет фона */
-            border-radius: 50px; /* Радиус скругления */
+            border-radius: 5px; /* Радиус скругления */
             padding: 3%; /* Поля */
             height:120px;
             line-height:100px;
             padding: 1rem;
             margin-bottom: 2rem;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
         }
 	</style>
 </head>
-<body>
-<div2 class="container mt-3" style="float: right;">
-    <button type="card" class="btn btn-outline-dark">{{ username }}</button>
-</div2>
-</body>
+    <body>
+        <div1 class="conteiner">
 
-<body>
-    <h1>Final Result</h1>
+        <div1 class="jumbotron" style="text-indent: 15px;">
+            <h2>Final score</h2>
+            <div1 class="button" style="position: relative; left: 1%;">
+            <button type="card" class="btn btn-outline-dark" >{{ username }}</button>
+            <div1>
+        </div1>
+        </div1>
+        <div class="container mt-3" style= "height:1px; width: 4000px;">
+        </div>
+                <div1 class="conteiner">
+                    <div1 class=" card" style="background: white;" >
+                        <div1 class="card" style="font-size: 13pt;">
+                            <div class="card text-center ">
+                            {{ task.name }}
+                            </div>
+                        </div1>
+                     <div1 class=" conteiner" >
+                        <div class="card" style="width: 16rem;">
+                            <h5 class="card-title" style="width: 8rem; margin: 0 0 0 3.0%; float: left;">YOURE SCORE</h5>
+                            <p class="card-body" style="margin: 0 0 0 3.0%; float: left; font-size: 30px;">{{ user_estimate }}</p>
+                        </div>
+                    </div1>
+                        {% if not task.score  %}
+                    <form
+                            class="form-horizontal"
+                            action="{{url_for('plannings.tasks.set_score', planning_id=planning_id, task_id=task.uid)}}"
+                            method="post"
+                        >
+                        <div class="card" style="width: 16rem;">
+                            <h5 class="card-title" style="width: 8rem; margin: 0 0 0 3.0%; float: left;">TOTAL SCORE</h5>
+                            <p class="card-body" style="margin: 0 0 0 3.0%; float: left;">
+                            <input
+                                id="score"
+                                type="text"
+                                class="form-control"
+                                placeholder="score"
+                                name="score"
+                            />
+                            </p>
+                            <button type="submit" class="btn btn-success" style="float: right;">Submit</button>
+                        </div>
+                    </form>
+                {% else %}
+                <b>[{{ task.score }}]</b>
+                {% endif %}
+                        </div1>
+                    </div1>
+                    <div1 class="card" >
+                        <div class="card text-center" style="line-height: 1.5; height: 400px;">
+                        <h3 style='text-align: left;'>Storypoint|User</h3>
 
-    <div1 class="card" style="width: 130rem; margin: 0 0 0 10.0%; ">
-        <div class="card text-center">
-              {{ task.name }}
-            </div>
-    </div1>
-
-<div class="card" style="width: 13rem;">
-    <h5 class="card-title" style="width: 8rem; margin: 0 0 0 3.0%; float: left;">YOURE SCORE</h5>
-    <p class="card-body" style="margin: 0 0 0 3.0%; float: left;">{{ user_estimate }}</p>
-</div>
-
-{% if not task.score  %}
-<form
-    class="form-horizontal"
-    action="{{url_for('plannings.tasks.set_score', planning_id=planning_id, task_id=task.uid)}}"
-    method="post"
->
-    <div class="card" style="width: 13rem;">
-        <h5 class="card-title" style="width: 8rem; margin: 0 0 0 3.0%; float: left;">TOTAL SCORE</h5>
-        <p class="card-body" style="margin: 0 0 0 3.0%; float: left;">
-            <input
-                id="score"
-                type="text"
-                class="form-control"
-                placeholder="score"
-                name="score"
-            />
-        </p>
-        <button type="submit" class="btn btn-success" style="float: right;">SCORE</button>
-    </div>
-</form>
-{% else %}
-<b>[{{ task.score }}]</b>
-{% endif %}
-
-
-  <div1 class="container">
-    <h2>UserStory</h2>
-
-    <div class="well well-lg" style="width: 20rem;">
-        {% for estimate in user_estimates %}
-        <li><b>{{ estimate[1] }}</b>: {{ estimate[0] }}</li>
-        {% endfor %}
-    </div>
-</div1>
-
-</body>
+                            <ul style="list-style-type:none; font-size: 13pt;">
+                                {% for estimate in user_estimates %}
+                                <li><b>{{ estimate[1] }}</b>: {{ estimate[0] }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div1>
+        </body>
 </html>
