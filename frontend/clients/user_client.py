@@ -10,7 +10,10 @@ class UserClient:
         self.headers = {'Content-Type': 'application/json'}
 
     def get_all_users(self, planning_id: int) -> list[User]:
-        res = httpx.get(f'{self.url}/{planning_id}/users/')
+        res = httpx.get(
+            url=f'{self.url}/{planning_id}/users/',
+            headers=self.headers,
+        )
         res.raise_for_status()
 
         users = res.json()
@@ -22,7 +25,10 @@ class UserClient:
         payload = orjson.dumps(user.dict())
 
         res = httpx.post(url, content=payload, headers=self.headers)
+        if res.status_code == 409:
+            return self.add_user(name=f'{name} |', planning_id=planning_id)
+
         res.raise_for_status()
 
-        user = res.json()
-        return User(**user)
+        data = res.json()
+        return User(**data)
