@@ -28,7 +28,7 @@
 </head>
 <body>
 <div2 class="container mt-3" style="float: right;">
-    <button type="card" class="btn btn-outline-dark">username </button>
+    <button type="card" class="btn btn-outline-dark">{{ username }}</button>
 </div2>
 </body>
 
@@ -37,29 +37,46 @@
 
     <div1 class="card" style="width: 130rem; margin: 0 0 0 10.0%; ">
         <div class="card text-center">
-              Название таски
+              {{ task.name }}
             </div>
     </div1>
 
 <div class="card" style="width: 13rem;">
     <h5 class="card-title" style="width: 8rem; margin: 0 0 0 3.0%; float: left;">YOURE SCORE</h5>
-    <p class="card-body" style="margin: 0 0 0 3.0%; float: left;">YOURE SCORE</p>
+    <p class="card-body" style="margin: 0 0 0 3.0%; float: left;">{{ user_estimate }}</p>
 </div>
 
-<div class="card" style="width: 13rem;">
-    <h5 class="card-title" style="width: 8rem; margin: 0 0 0 3.0%; float: left;">TOTAL SCORE</h5>
-    <p class="card-body" style="margin: 0 0 0 3.0%; float: left;">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
-</p>
-    <button type="submit" class="btn btn-success" style="float: right;">SCORE</button>
-  </div>
+{% if not task.score  %}
+<form
+    class="form-horizontal"
+    action="{{url_for('plannings.tasks.set_score', planning_id=planning_id, task_id=task.uid)}}"
+    method="post"
+>
+    <div class="card" style="width: 13rem;">
+        <h5 class="card-title" style="width: 8rem; margin: 0 0 0 3.0%; float: left;">TOTAL SCORE</h5>
+        <p class="card-body" style="margin: 0 0 0 3.0%; float: left;">
+            <input
+                id="score"
+                type="text"
+                class="form-control"
+                placeholder="score"
+                name="score"
+            />
+        </p>
+        <button type="submit" class="btn btn-success" style="float: right;">SCORE</button>
+    </div>
+</form>
+{% else %}
+<b>[{{ task.score }}]</b>
+{% endif %}
+
 
   <div1 class="container">
     <h2>UserStory</h2>
 
     <div class="well well-lg" style="width: 20rem;">
-        {% for user in users %}
-        <li>{{ user.name }}</li>
+        {% for estimate in user_estimates %}
+        <li><b>{{ estimate[1] }}</b>: {{ estimate[0] }}</li>
         {% endfor %}
     </div>
 </div1>

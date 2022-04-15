@@ -7,7 +7,7 @@
         <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-            />
+        />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <style>
@@ -32,19 +32,26 @@
             <p>Scrum Poker for You</p>
         </div>
         <div class="container mt-3">
-            <button type="button" class="btn btn-outline-dark">{{ username }}</button>
+            <button type="button" class="btn btn-outline-dark">
+                {{ username }}
+            </button>
         </div>
+        {% if userid and username %}
         <div class="container">
             <h2>Задачи</h2>
 
             <div class="well well-lg">
                 {% for task in tasks %}
                 <a
-                href="{{url_for('plannings.tasks.get_task_by_id', planning_id=planning_id, task_id=task.uid)}}"
-            >
-                <ul style="list-style-type: none">
-                    <li>{{ task.name }}</li>
-                </ul>
+                    href="{{url_for('plannings.tasks.get_task_by_id', planning_id=planning_id, task_id=task.uid)}}"
+                >
+                    <ul style="list-style-type: none">
+                        <li>
+                            {% if task.score %}
+                            <b>[{{ task.score }}]</b>
+                            {% endif %} {{ task.name }}
+                        </li>
+                    </ul>
                 </a>
                 {% endfor %}
             </div>
@@ -75,6 +82,7 @@
                 </div>
             </form>
         </div>
+        {% endif %}
 
         <div class="container">
             <h2>Пользователи</h2>

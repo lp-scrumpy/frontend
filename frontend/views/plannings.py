@@ -1,13 +1,13 @@
 import logging
 
-from flask import (Blueprint, redirect, render_template, request, session,
-                   url_for)
+from flask import (Blueprint, abort, redirect, render_template, request,
+                   session, url_for)
 
 from frontend.clients.plan_client import PlanningClient
 from frontend.clients.task_client import TaskClient
 from frontend.clients.user_client import UserClient
-from frontend.views.tasks import task_view
 from frontend.config import ENDPOINT
+from frontend.views.tasks import task_view
 
 view = Blueprint('plannings', __name__)
 view.register_blueprint(task_view, url_prefix='/<int:planning_id>/tasks')
@@ -19,11 +19,20 @@ user_client = UserClient(ENDPOINT)
 task_client = TaskClient(ENDPOINT)
 
 
-@view.route('/<planning_id>')
-def plan(planning_id):
+@view.route('/<int:planning_id>')
+def plan(planning_id: int):
     username, userid = session.get('username'), session.get('userid')
+    planning = plan_client.get_by_id(planning_id)
+    if not planning:
+        abort(404, "Planning not found")
+
     tasks = task_client.get_all_tasks(planning_id)
     users = user_client.get_all_users(planning_id)
+    users_set = {user.uid for user in users}
+
+    if userid and username and userid not in users_set:
+        username, userid = None, None
+
     return render_template(
         'plannings.html',
         username=username,
@@ -44,8 +53,10 @@ def create_task(planning_id):
 @view.post('/<planning_id>/users/')
 def create_user(planning_id):
     logger.info('user created %s', planning_id)
-    user_client.add_user(name=request.form['user'], planning_id=planning_id)
 
-    session['userid'] = 1
-    session['username'] = request.form['user']
+    user = user_client.add_user(name=request.form['user'], planning_id=planning_id)
+
+    session['userid'] = user.uid
+    session['username'] = user.name
+
     return redirect(url_for('plannings.plan', planning_id=planning_id))
