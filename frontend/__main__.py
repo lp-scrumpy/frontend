@@ -14,7 +14,7 @@ def main():
     app.secret_key = config.SECRET_KEY
     app.register_blueprint(view, url_prefix='/')
     app.register_blueprint(plannings.view, url_prefix='/plannings')
-    app.run()
+    app.run(host=config.APP_HOST, port=config.APP_PORT)
 
 
 if __name__ == '__main__':
