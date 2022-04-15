@@ -8,7 +8,8 @@ class EstimateClient:
         self.url = f'{url}/plannings'
 
     def get_estimates(self, planning_id: int, task_id: int) -> list[Estimate]:
-        res = httpx.get(f'{self.url}/{planning_id}/tasks/{task_id}/score/')
+        res = httpx.get(f'{self.url}/{planning_id}/tasks/{task_id}/estimates/')
+        res.raise_for_status()
 
         estimates = res.json()
         return [Estimate(**estimate)for estimate in estimates]

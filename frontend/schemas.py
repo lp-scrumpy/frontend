@@ -1,5 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel
+from typing import Optional
 
 
 class User(BaseModel):
@@ -16,9 +17,10 @@ class Plan(BaseModel):
 class Task(BaseModel):
     uid: int
     name: str
+    score: Optional[int]
 
 
 class Estimate(BaseModel):
     uid: int
-    estimate: str
     user_id: int
+    storypoint: Optional[int]

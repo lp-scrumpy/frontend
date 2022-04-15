@@ -1,7 +1,8 @@
 import orjson
 import httpx
+from typing import Optional
 
-from frontend.schemas import Plan, Task, Estimate
+from frontend.schemas import Task, Estimate
 
 
 class TaskClient:
@@ -16,12 +17,27 @@ class TaskClient:
         tasks = res.json()
         return [Task(**task)for task in tasks]
 
-    def add_task(self, name: str, planning_id: int) -> Plan:
+    def add_task(self, name: str, planning_id: int) -> Task:
         url = f'{self.url}/{planning_id}/tasks/'
-        task = Task(uid=-1, name=name)
-        payload = orjson.dumps(task.dict())
+        new_task = Task(uid=-1, name=name)
+        payload = orjson.dumps(new_task.dict())
 
         res = httpx.post(
+            url,
+            content=payload,
+            headers=self.headers,
+            timeout=20,
+        )
+        res.raise_for_status()
+
+        task = res.json()
+        return Task(**task)
+
+    def set_score(self, planning_id: int, task_id: int, storypoint: int) -> Task:
+        url = f'{self.url}/{planning_id}/tasks/{task_id}'
+        payload = orjson.dumps({'score': storypoint})
+
+        res = httpx.patch(
             url,
             content=payload,
             headers=self.headers,
@@ -40,16 +56,25 @@ class TaskClient:
         task = res.json()
         return Task(**task)
 
-    def set_estimates(self, storypoint: int, planning_id: int, task_id: int, user_id: int) -> Estimate:
+    def set_estimates(
+        self,
+        planning_id: int,
+        task_id: int,
+        user_id: int,
+        storypoint: int = None,
+    ) -> Optional[Estimate]:
         url = f'{self.url}/{planning_id}/tasks/{task_id}/estimates/'
-        estimate = Estimate(uid=-1, storypoint=storypoint, user_id=user_id)
-        payload = orjson.dumps(estimate.dict())
+        new_estimate = Estimate(uid=-1, storypoint=storypoint, user_id=user_id)
+        payload = orjson.dumps(new_estimate.dict())
         res = httpx.post(
             url,
             content=payload,
             headers=self.headers,
             timeout=20,
         )
+        if res.status_code == 409:
+            return None
+
         res.raise_for_status()
 
         estimate = res.json()
